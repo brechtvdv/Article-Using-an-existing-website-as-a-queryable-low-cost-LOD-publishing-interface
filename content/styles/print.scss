@@ -1,4 +1,4 @@
-@import "acm.scss";
+@import "lncs.scss";
 @import "shared.scss";
 
 header {
@@ -9,4 +9,15 @@ header {
 
 figure.listing pre {
 	white-space: initial;
+}
+
+#wiperstimes, #partial-collection-controls{
+	display: none;
+}
+
+#codepen-img {
+	width: 50%;
+	  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

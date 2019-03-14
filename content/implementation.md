@@ -5,8 +5,8 @@
 
 Every newspaper webpage is annotated with JSON-LD snippets containing domain-specific metadata and hypermedia controls. The former metadata is described using acknowledged vocabularies such as [Dublin Core Terms](http://dublincore.org/documents/dcmi-terms/) (DCTerms), [Friend of a Friend](http://xmlns.com/foaf/spec/) (FOAF), [Schema.org](https://schema.org/) etc. The latter is described using the [Hydra](https://www.hydra-cg.com/spec/latest/core) vocabulary for hypermedia-driven Web APIs. Although hetarchief.be contains several human-readable hypermedia controls (free text search bar, search facets, pagination for every [newspaper](https://hetarchief.be/nl/media/brief-van-den-soldaat-aan-zijne-verdrukte-medeburgers/I2STYUAOpmFKmbFRXNmV0PTp) ) only Hydras partial collection view controls are implemented: hydra:next describes the next newspaper, vice versa hydra:previous. Also an estimate of the amount of triples on a page is added using hydra:totalItems and void:triples. This helps user agents to build more efficient query plans.
 
-<figure id="partial-collection-controls" class="listing">
-````/code/hydra-partial-collection-view.txt````
+<figure id="partial-collection-controls" class="figure">
+ ````/code/hydra-partial-collection-view.txt````
 <figcaption markdown="block">
 Every newspaper describes its next and previous newspaper using Hydra partial collection view controls. This wires Linked Data Fragments together into a dataset.
 </figcaption>
@@ -32,13 +32,13 @@ That is why we added an actor (`ActorRdfParseHtmlScript`) for parsing such HTML 
 This intermediate parser searches for data snippets and forwards these to their respective RDF parser.
 In case of a JSON-LD snippet, the body of a script tag  `<script type="application/ld+json">` will be parsed by the JSON-LD parse actor.
 
-By adding these two actors to Comunica, we can now query over a paged collection that is declaratively described with data snippets. As federated querying comes out-of-the-box with Comunica, this cultural heritage collection can now be queried together with other knowledge bases (cfr. Wikidata). For example, [](#federated-querying-comunica) crawls over 17 newspaper pages. The first result appears after reading the first page. All results are available after 1,5 minutes. This is caused by deficiency of indexes where all pages need examination before having a complete answer.
+By adding these two actors to Comunica, we can now query over a paged collection that is declaratively described with data snippets. As federated querying comes out-of-the-box with Comunica, this cultural heritage collection can now be queried together with other knowledge bases (cfr. Wikidata). For example, retrieving basic information such as title, publication date etc. from 17 newspaper pages requires 1,5 minutes until all results are retrieved. This is caused by deficiency of indexes where all pages need examination before having a complete answer.
 
-<figure id="federated-querying-comunica" class="listing">
+<!-- <figure id="federated-querying-comunica" class="listing">
 ````/code/federated-querying-comunica.txt````
 <figcaption markdown="block">
 SPARQL-query over a paged collection of hetarchief.be and the TPF interface of Wikidata using the JavaScript-based command line interface of Comunica.
 </figcaption>
-</figure>
+</figure> -->
 
 In next section we will demonstrate how SPARQL-querying can be applied for extracting a spreadsheet.
