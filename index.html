@@ -27,7 +27,7 @@
   <section class="context">
     <h2 id="in-reply-to">In reply to</h2>
     <ul>
-      <li><a href="https://www2019.thewebconf.org/call-for-demonstrations" rel="as:inReplyTo">The Web Conference 2019 Call for Demonstrations</a></li>
+      <li><a href="https://2019.eswc-conferences.org/call-for-posters-and-demos/" rel="as:inReplyTo">ESWC 2019 Call for Posters and Demos</a></li>
     </ul>
   </section>
 
@@ -67,8 +67,10 @@ This enables heterogenous data interfaces to share functionality and become tech
 
 <main>
   <!-- Add sections by specifying their file name, excluding the '.md' suffix. -->
-  <section id="introduction">
-      <h2>Introduction</h2>
+  <section>
+      <div class="printonly">This is a print-version of a paper first written for the Web. The Web-version is available at <a href="https://github.com/brechtvdv/Article-Using-an-existing-website-as-a-queryable-low-cost-LOD-publishing-interface">https:/​/​github.com/brechtvdv/Article-Using-an-existing-website-as-a-queryable-low-cost-LOD-publishing-interface</a>.</div>
+
+      <h2 id="introduction">Introduction</h2>
 
       <p>The <a href="https://viaa.be">Flemish Institute for Audiovisual Archiving</a> (VIAA) is a non-profit organization that preserves petabytes of valuable image, audio or video files. These files and accompanying metadata are covered by distinct <a href="https://viaa.be/nl/portaal/support-category/item/viaa-licenties-in-het-archiefsysteem">licenses</a>, but some can be made accessible under an Open Data <a href="https://creativecommons.org/publicdomain/zero/1.0/">license</a>. One initiative is opening up historical newspapers of the first World War with the open platform <a href="https://hetarchief.be">hetarchief.be</a>. In 2017, the raw data of these newspapers have been published as a <a property="schema:citation http://purl.org/spar/cito/cites" href="https://5stardata.info/en/">Linked Open Data</a> <span class="references">[<a href="#ref-1">1</a>]</span> (LOD) dataset using the low-cost <span property="schema:citation http://purl.org/spar/cito/cites" resource="https://dx.doi.org/10.1016/j.websem.2016.03.003"><a href="http://linkeddatafragments.org/publications/jws2016.pdf">Triple Pattern Fragments</a></span> <span class="references">[<a href="#ref-2">2</a>]</span> (TPF) interface. Although this interface is still accessable (<a href="http://linkeddatafragments-qas.viaa.be/">http:/​/​linkeddatafragments-qas.viaa.be/</a>), no updates from the website have been exported to the TPF interface due to absence of automatisation.</p>
 
@@ -87,12 +89,33 @@ This enables heterogenous data interfaces to share functionality and become tech
 
       <p><span property="schema:citation http://purl.org/spar/cito/cites" resource="https://dx.doi.org/10.1007/978-3-030-00668-6_15"><a href="https://comunica.github.io/Article-ISWC2018-Resource/">Comunica</a></span> <span class="references">[<a href="#ref-5">5</a>]</span> is a Linked Data user agent that can run federated queries over several heterogeneous Web APIs, such as data dumps, SPARQL-endpoints, Linked Data documents and Triple Pattern Fragments. This engine has been developed to make it easy to plug in specific types of functionality as separate modules. Such modules can be added or removed depending on the configuration. As such, by looking for affordances in Web APIs more intelligent user agents can be created.</p>
 
-      <p>First we describe how hetarchief.be is enriched with JSON-LD snippets. Next, we explain how we allow Comunica to query over this and other sources by adding two building blocks.
+      <p>First we give a short background of the Comunica tool and the Hydra partial collection views.
+We then describe how hetarchief.be is enriched with JSON-LD snippets. Next, we explain how we allow Comunica to query over this and other sources by adding two building blocks.
 After this, we demonstrate how a custom data dump can be created by an end-user that wants to further analyze this data, for instance in spreadsheet software.
 The online version of this paper embeds this demo and can be tested live.
-We then give a short background of the Comunica tool and the Hydra partial collection views.
 Finally, we conclude the demonstrator with a discussion and perspective on future work.</p>
 
+    </section>
+
+  <section id="sota">
+      <h2>Background</h2>
+
+      <h3 id="comunica">Comunica</h3>
+
+      <p>Every piece of functionality in Comunica can be implemented as seperate building blocks based on the <em>actor</em> programming model, where each actor can respond to a specific action. Actors that share same functionality, but with different implementations, can be grouped with a communication channel called a <em>bus</em>. Interaction between actors is possible through a <em>mediator</em> that wraps around a bus to get an action’s result from a single actor. This result depends on the configuration of the mediator, e.g. a race mediator will return the response of the actor that is able to reply the earliest.</p>
+
+      <!-- <figure id="actor">
+<center>
+<img src="img/actor-mediator-bus.svg">
+</center>
+<figcaption markdown="block">
+Actor 0 initiates an action to a mediator. The mediator communicates through a bus with all actors 1, 2 and 3 that are able to solve the action and gives back the most favorable result according to its configuration.
+</figcaption>
+</figure> -->
+
+      <h3 id="hydra-partial-collection-views">Hydra partial collection views</h3>
+
+      <p>Open Data is filled with collections of members (hotel ammenities, road works etc.). These related resources can be grouped as members of a collection using the <a href="https://www.hydra-cg.com/spec/latest/core/#collections">Hydra</a> vocabulary. When the size of mebers is too big, data owners can fragment this into collection views. Each view represents a part of the collection to keep the Web API responses lightweight. In the case of hetarchief.be represents each newspaper HTTP document one view of the collection of newspapers. These views are linked together with partial collection view controls: previous, next, first and last. This allows a client to fetch all members of the collection.</p>
     </section>
 
   <section id="implementation">
@@ -102,8 +125,8 @@ Finally, we conclude the demonstrator with a discussion and perspective on futur
 
       <p>Every newspaper webpage is annotated with JSON-LD snippets containing domain-specific metadata and hypermedia controls. The former metadata is described using acknowledged vocabularies such as <a href="http://dublincore.org/documents/dcmi-terms/">Dublin Core Terms</a> (DCTerms), <a href="http://xmlns.com/foaf/spec/">Friend of a Friend</a> (FOAF), <a href="https://schema.org/">Schema.org</a> etc. The latter is described using the <a href="https://www.hydra-cg.com/spec/latest/core">Hydra</a> vocabulary for hypermedia-driven Web APIs. Although hetarchief.be contains several human-readable hypermedia controls (free text search bar, search facets, pagination for every <a href="https://hetarchief.be/nl/media/brief-van-den-soldaat-aan-zijne-verdrukte-medeburgers/I2STYUAOpmFKmbFRXNmV0PTp">newspaper</a> ) only Hydras partial collection view controls are implemented: hydra:next describes the next newspaper, vice versa hydra:previous. Also an estimate of the amount of triples on a page is added using hydra:totalItems and void:triples. This helps user agents to build more efficient query plans.</p>
 
-      <figure id="partial-collection-controls" class="listing">
-<pre><code>{
+      <figure id="partial-collection-controls" class="figure">
+ <pre><code>{
 </code><code>  &quot;@context&quot;: &quot;https://www.w3.org/ns/hydra/context.jsonld&quot;,
 </code><code>  &quot;@id&quot;: &quot;https://hetarchief.be/media/de-school-op-het-front-studiebladen-van-sursum-corda/CMEPpOVIRqYiVZSYd3Q3k8tL&quot;,
 </code><code>  &quot;previous&quot;: &quot;https://hetarchief.be/media/vrij-belgi%C3%AB/B1IVhaOMLFgCUGNJkVGuZH3S&quot;,
@@ -112,7 +135,7 @@ Finally, we conclude the demonstrator with a discussion and perspective on futur
 </code><code>  &quot;http://rdfs.org/ns/void#triples&quot;: 50
 </code><code>}</code></pre>
 <figcaption>
-          <p><span class="label">Listing 1:</span> Every newspaper describes its next and previous newspaper using Hydra partial collection view controls. This wires Linked Data Fragments together into a dataset.</p>
+          <p><span class="label">Fig. 2:</span> Every newspaper describes its next and previous newspaper using Hydra partial collection view controls. This wires Linked Data Fragments together into a dataset.</p>
         </figcaption>
 </figure>
 
@@ -136,9 +159,9 @@ That is why we added an actor (<code>ActorRdfParseHtmlScript</code>) for parsing
 This intermediate parser searches for data snippets and forwards these to their respective RDF parser.
 In case of a JSON-LD snippet, the body of a script tag  <code>&lt;script type="application/ld+json"&gt;</code> will be parsed by the JSON-LD parse actor.</p>
 
-      <p>By adding these two actors to Comunica, we can now query over a paged collection that is declaratively described with data snippets. As federated querying comes out-of-the-box with Comunica, this cultural heritage collection can now be queried together with other knowledge bases (cfr. Wikidata). For example, <a href="#federated-querying-comunica">Listing 2</a> crawls over 17 newspaper pages. The first result appears after reading the first page. All results are available after 1,5 minutes. This is caused by deficiency of indexes where all pages need examination before having a complete answer.</p>
+      <p>By adding these two actors to Comunica, we can now query over a paged collection that is declaratively described with data snippets. As federated querying comes out-of-the-box with Comunica, this cultural heritage collection can now be queried together with other knowledge bases (cfr. Wikidata). For example, retrieving basic information such as title, publication date etc. from 17 newspaper pages requires 1,5 minutes until all results are retrieved. This is caused by deficiency of indexes where all pages need examination before having a complete answer.</p>
 
-      <figure id="federated-querying-comunica" class="listing">
+      <!-- <figure id="federated-querying-comunica" class="listing">
 <pre><code>$ node packages/actor-init-sparql/bin/query.js
 </code><code>hypermedia@https://hetarchief.be/nl/media/brief-van-den-soldaat-aan-zijne-verdrukte-medeburgers/r1ROcQtfXfhOZbUbUpivGRpY
 </code><code>hypermedia@https://query.wikidata.org/bigdata/ldf
@@ -150,10 +173,10 @@ In case of a JSON-LD snippet, the body of a script tag  <code>&lt;script type="a
 </code><code>	 ?newspaper &lt;http://schema.org/publisher&gt; ?publisher . 
 </code><code> 	}
 </code><code>}&quot;</code></pre>
-<figcaption>
-          <p><span class="label">Listing 2:</span> SPARQL-query over a paged collection of hetarchief.be and the TPF interface of Wikidata using the JavaScript-based command line interface of Comunica.</p>
-        </figcaption>
-</figure>
+<figcaption markdown="block">
+SPARQL-query over a paged collection of hetarchief.be and the TPF interface of Wikidata using the JavaScript-based command line interface of Comunica.
+</figcaption>
+</figure> -->
 
       <p>In next section we will demonstrate how SPARQL-querying can be applied for extracting a spreadsheet.</p>
     </section>
@@ -166,10 +189,10 @@ The application is written with the front-end playground Codepen <a href="https:
 
       <figure id="codepen">
 <center>
-<img src="img/codepen.PNG" />
+<img id="codepen-img" src="img/codepen.PNG" />
 </center>
 <figcaption>
-          <p><span class="label">Fig. 2:</span> A spreadsheet is generated by entering a URL of a newspaper from hetarchief.be.</p>
+          <p><span class="label">Listing 1:</span> A spreadsheet is generated by entering a URL of a newspaper from hetarchief.be.</p>
         </figcaption>
 </figure>
 
@@ -184,36 +207,23 @@ Optionally, a SPARQL-query can be configured to customize the desired outcome.</
 
     </section>
 
-  <section id="sota">
-      <h2>Background</h2>
-
-      <h3 id="comunica">Comunica</h3>
-
-      <p>Every piece of functionality in Comunica can be implemented as seperate building blocks based on the <em>actor</em> programming model, where each actor can respond to a specific action. Actors that share same functionality, but with different implementations, can be grouped with a communication channel called a <em>bus</em>. Interaction between actors is possible through a <em>mediator</em> that wraps around a bus to get an action’s result from a single actor. This result depends on the configuration of the mediator, e.g. a race mediator will return the response of the actor that is able to reply the earliest.</p>
-
-      <figure id="actor">
-<center>
-<img src="img/actor-mediator-bus.svg" />
-</center>
-<figcaption>
-          <p><span class="label">Fig. 3:</span> Actor 0 initiates an action to a mediator. The mediator communicates through a bus with all actors 1, 2 and 3 that are able to solve the action and gives back the most favorable result according to its configuration.</p>
-        </figcaption>
-</figure>
-
-      <h3 id="hydra-partial-collection-views">Hydra partial collection views</h3>
-
-      <p>Open Data is filled with collections of members (hotel ammenities, road works etc.). These related resources can be grouped as members of a collection using the <a href="https://www.hydra-cg.com/spec/latest/core/#collections">Hydra</a> vocabulary. When the size of mebers is too big, data owners can fragment this into collection views. Each view represents a part of the collection to keep the Web API responses lightweight. In the case of hetarchief.be represents each newspaper HTTP document one view of the collection of newspapers. These views are linked together with partial collection view controls: previous, next, first and last. This allows a client to fetch all members of the collection.</p>
-    </section>
-
   <section id="conclusion">
       <h2>Conclusion</h2>
 
-      <p>Data owners can publish their Linked Open Data very cost-efficient on their website with JSON-LD snippets. After an initial cost of adding this feature to their website, they can have an always up-to-date dataset with negligible maintenance costs. The cultural heritage website hetarchief.be showcases an official maintained paged collection of Linked Data Fragments about newspapers. By extending Comunica, in-depth data analysis and federated querying over this dataset is possible. To improve querying speed, Linked Data services (<a href="http://semanticweb.org/wiki/SPARQL_endpoint.html">SPARQL-endpoint</a>, HDT <span class="references">[<a href="#ref-6">6</a>]</span> file, TPF interface…) with a higher maintenance cost can be created on top of JSON-LD snippets. Such interfaces would suffer from scalability problems: Optical Character Recognition (OCR) texts have bad compression rates, and thus require gigabytes of disk space. With our solution, these OCR-text are published in a seperate document keeping the maintenance cost low while harvesting in an automated way is still possible. By using our demonstrator, non-technical users are able to extract a data dump from an enriched website.</p>
+      <p>Data owners can publish their Linked Open Data very cost-efficient on their website with JSON-LD snippets. After an initial cost of adding this feature to their website, they can have an always up-to-date dataset with negligible maintenance costs, however, machine clients that query and harvest over websites can introduce unforeseen spikes of activity. Data owners will need to extend their monitoring capabilities to not only focus on human interaction (e.g. Google Analytics) and apply a HTTP caching strategy for stale resources.</p>
 
-      <p>To gain traction with an international audience, e.g. the science stories platform (<a href="http://sciencestories.io">http:/​/​sciencestories.io</a>), a reconciliation service could be created with knowledge bases (cfr. Wikidata). 
-Next to embedding the data, hypermedia controls or search engine optimization features, also the <a href="https://iiif.io/api/image/2.1/">International Image Interoperability Framework</a> (IIIF) Image API for sharing images could be described within a JSON-LD snippet for raising the discoverability of this service. IIIF API information already uses JSON-LD to describe its features such as tiling and licensing which makes this an excellent snippet addition helping an organization become more visible on the Web.</p>
+      <p>Linked Data services (HDT <span class="references">[<a href="#ref-6">6</a>]</span> file, TPF interface…) with a higher maintenance cost can be created on top of JSON-LD snippets, but these would suffer from scalability problems: Optical Character Recognition (OCR) texts have bad compression rates, and thus require gigabytes of disk space. With our solution, these OCR-text are published in a seperate document keeping the maintenance cost low while harvesting in an automated way is still possible.</p>
 
-      <p>In future work, extending Comunica for harvesting Hydra collections would help organizations to improve their collection management. These collections could be defined on their main page of their website improving Open Data discoverability. Also work on supporting multiple views acting as indexes for collections would benefit querying performance on sorting or filtering operations on e.g. geospatial or temporal data.</p>
+      <p>In future work, extending Comunica for harvesting Hydra collections would help organizations to improve their collection management. These collections could be defined on their main page of their website improving Open Data discoverability.</p>
+
+      <!--By using our demonstrator, non-technical users are able to extract a data dump from an enriched website.-->
+
+      <!-- The cultural heritage website hetarchief.be showcases an official maintained paged collection of Linked Data Fragments about newspapers. By extending Comunica, in-depth data analysis and federated querying over this dataset is possible. To improve querying speed, Linked Data services ([SPARQL-endpoint](http://semanticweb.org/wiki/SPARQL_endpoint.html), HDT <span class="references">\[<a href="#ref-6">6</a>\]</span> file, TPF interface...) with a higher maintenance cost can be created on top of JSON-LD snippets. Such interfaces would suffer from scalability problems: Optical Character Recognition (OCR) texts have bad compression rates, and thus require gigabytes of disk space. With our solution, these OCR-text are published in a seperate document keeping the maintenance cost low while harvesting in an automated way is still possible. By using our demonstrator, non-technical users are able to extract a data dump from an enriched website. -->
+
+      <!-- To gain traction with an international audience, e.g. the science stories platform ([http://sciencestories.io](http://sciencestories.io)), a reconciliation service could be created with knowledge bases (cfr. Wikidata). 
+Next to embedding the data, hypermedia controls or search engine optimization features, also the [International Image Interoperability Framework](https://iiif.io/api/image/2.1/) (IIIF) Image API for sharing images could be described within a JSON-LD snippet for raising the discoverability of this service. IIIF API information already uses JSON-LD to describe its features such as tiling and licensing which makes this an excellent snippet addition helping an organization become more visible on the Web. -->
+
+      <!--In future work, extending Comunica for harvesting Hydra collections would help organizations to improve their collection management. These collections could be defined on their main page of their website improving Open Data discoverability. Also work on supporting multiple views acting as indexes for collections would benefit querying performance on sorting or filtering operations on e.g. geospatial or temporal data.-->
     </section>
 
 </main>
