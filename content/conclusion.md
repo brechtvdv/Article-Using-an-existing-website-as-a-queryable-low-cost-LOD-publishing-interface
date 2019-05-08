@@ -1,9 +1,12 @@
 ##  Conclusion
 {:#conclusion}
 
-Data owners can publish their Linked Open Data very cost-efficient on their website with JSON-LD snippets. After an initial cost of adding this feature to their website, they can have an always up-to-date dataset with negligible maintenance costs, however, machine clients that query and harvest over websites can introduce unforeseen spikes of activity. Data owners will need to extend their monitoring capabilities to not only focus on human interaction (e.g. Google Analytics) and apply a HTTP caching strategy for stale resources.
+Data owners can publish their LOD very cost-efficient on their website with JSON-LD snippets. After an initial cost of adding this feature to their website, they can have an always up-to-date dataset with negligible maintenance costs, however, machine clients that query and harvest over websites can introduce unforeseen spikes of activity. Data owners will need to extend their monitoring capabilities to not only focus on human interaction (e.g. Google Analytics) and apply a HTTP caching strategy for stale resources.
 
-Linked Data services ([HDT](cite:cites Fernndez2013BinaryRR) file, TPF interface...) with a higher maintenance cost can be created on top of JSON-LD snippets, but these would suffer from scalability problems: Optical Character Recognition (OCR) texts have bad compression rates, and thus require gigabytes of disk space. With our solution, these OCR-text are published in a seperate document keeping the maintenance cost low while harvesting in an automated way is still possible. 
+Linked Data services ([HDT](cite:cites Fernndez2013BinaryRR) file, TPF interface...) with a higher maintenance cost can be created on top of JSON-LD snippets, but these would suffer from scalability problems: OCR texts have bad compression rates, and thus require gigabytes of disk space. With our solution, these OCR texts are published in a seperate document keeping the maintenance cost low while harvesting in an automated way is still possible. 
+
+<!--  What are the advantages and disadvantages of the proposed approach? How can the work be compared with others? What are the differences to other cultural heritage LODs like e.g. Europeana?  -->
+The LOD interfaces of the European cultural heritage platform Europeana work the opposite from this work: every subject page contains a title and description annotation for SEO, but the actual machine-readable data is exposed through a API key protected record API and publicly available SPARQL endpoint. By supporting JSON-LD snippets on their website, the record API would be needless and more importantly, Open Data reusers would have a starting point for querying the SPARQL-endpoint.
 
 In future work, extending Comunica for harvesting Hydra collections would help organizations to improve their collection management. These collections could be defined on their main page of their website improving Open Data discoverability.
 
