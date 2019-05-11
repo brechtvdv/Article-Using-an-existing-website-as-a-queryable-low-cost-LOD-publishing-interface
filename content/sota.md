@@ -5,7 +5,7 @@
 
 [Comunica](cite:cites taelman_iswc_2018) is a Linked Data user agent that can run federated queries over several heterogeneous Web APIs. This engine has been developed to make it easy to plug in specific types of functionality as separate modules.
 
-In Comunica a _bus_ module is used as communication channel to solve one problem, e.g. to extract hypermedia controls from a Web API. Multiple _actor_ modules can subscribe to a bus and extract one or more hypermedia controls according to their implementation. A _mediator_ module wraps around the bus to select the most appropriate results. As such, by supporting multiple hypermedia controls more intelligent user agents can be created.
+A _bus_ module is used as communication channel to solve one problem, e.g. to extract hypermedia controls from a Web API. Multiple _actor_ modules can subscribe to a bus and extract one or more hypermedia controls according to their implementation. A _mediator_ module wraps around the bus to select the most appropriate results. As such, by supporting multiple hypermedia controls more intelligent user agents can be created.
 
 
 <!-- Every piece of functionality in Comunica can be implemented as seperate building blocks based on the _actor_ programming model, where each actor can respond to a specific action. Actors that share same functionality, but with different implementations, can be grouped with a communication channel called a _bus_. Interaction between actors is possible through a _mediator_ that wraps around a bus to get an action's result from a single actor. This result depends on the configuration of the mediator, e.g. a race mediator will return the response of the actor that is able to reply the earliest. -->
