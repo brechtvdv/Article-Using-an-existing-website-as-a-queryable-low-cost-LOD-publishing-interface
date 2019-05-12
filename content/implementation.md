@@ -22,7 +22,7 @@ First, we needed a generic actor to support pagination over any kind of hypermed
 Secondly, an actor was needed to parse JSON-LD data snippets from HTML documents.
 We will explain these two actors in more detail hereafter.
 
-`BusRdfResolveHypermedia` is a bus in Comunica that resolves hypermedia controls from sources,
+`BusRdfResolveHypermedia` is a bus in Comunica that resolves hypermedia controls from sources.
 Currently, this bus only contains an actor that resolves controls for TPF interfaces.
 We added a new actor (`ActorRdfResolveHypermediaNextPage`) to this bus that returns a search form containing a next page link, vice versa for previous page links.
 
